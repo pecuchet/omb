@@ -1,0 +1,33 @@
+# Arnaud's bash style
+
+PROMPT_COMMAND_ORG=${PROMPT_COMMAND}
+
+function bash_prompt() {
+  local user='\u'
+  local device='\h'
+  local pwd='\w'
+
+  # Git stuff
+  local inside_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+  local current_branch=''
+
+  if [[ $inside_repo == true ]]; then
+    abs_path="$(pwd)"
+    git_root="$(basename $(git rev-parse --show-toplevel))"
+    current_branch=" $(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
+    if [[ "${git_root}" != "$(basename ${abs_path})" ]]; then
+      rel_path=(${abs_path//${git_root}/ })
+      current_branch="${current_branch} \[\033[01;30m\] ..${rel_path[1]}\[\033[00m\]"
+    fi
+    pwd="${git_root}"
+  fi
+
+  line_2="\n\[\033[01;34m\]${pwd}\[\033[00m\] ${current_branch}"
+
+  line_1="\n❯ "
+
+  PS1="${line_2}${line_1}"
+}
+
+PROMPT_COMMAND="bash_prompt; $PROMPT_COMMAND_ORG"
+
