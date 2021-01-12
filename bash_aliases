@@ -1,5 +1,8 @@
 # Bash aliases
 
+## General
+alias ll='ls -alF'
+
 ## Git
 alias ga='git add'
 alias gb='git branch -v'
