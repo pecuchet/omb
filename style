@@ -17,7 +17,7 @@ function bash_prompt() {
     current_branch=" $(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
     if [[ "${git_root}" != "$(basename ${abs_path})" ]]; then
       rel_path=(${abs_path//${git_root}/ })
-      current_branch="${current_branch} \[\033[01;30m\] ..${rel_path[1]}\[\033[00m\]"
+      current_branch="${current_branch} \[\033[01;37m\] ..${rel_path[1]}\[\033[00m\]"
     fi
     pwd="${git_root}"
   fi
